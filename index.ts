@@ -28,24 +28,21 @@ function identity(k: number): number {
 /* Cost function */
 function cost(ys: number[], labels: number[]): number {
   if (ys.length !== labels.length)
-    throw new Error("incompatibility in capacity between sys and ys");
+    throw new Error("incompatibility in capacity between ys and labels");
 
   const s = labels.reduce((acc, label, i): number => {
     const y = ys[i];
     return Math.pow(y - label, 2) + acc;
   }, 0);
 
-  // return s / labels.length;
   return s;
 }
 
-async function train() {
+function train() {
   const entries = 1;
 
-  // const weights = rand.nums(entries);
-  const weights = [2.5];
-  // const bias = rand.num();
-  const bias = 6;
+  const weights = rand.nums(entries);
+  const bias = rand.num();
   const neuron = new Neuron(bias, weights, identity);
 
   const samples = [
@@ -53,8 +50,6 @@ async function train() {
     [2],
     [4],
     [6],
-    // rand.nums(connections),
-    // rand.nums(connections),
   ];
 
   const labels = [6, 11, 16, 21];
