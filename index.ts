@@ -4,6 +4,7 @@ class Neuron {
   constructor(
     public readonly bias: number,
     public readonly weights: number[],
+    private activate: (k: number) => number,
   ) {}
 
   public compute(xs: number[]): number {
@@ -16,8 +17,12 @@ class Neuron {
         return x * w + acc;
       }, 0) + this.bias;
 
-    return k;
+    return this.activate(k);
   }
+}
+
+function identity(k: number): number {
+  return k;
 }
 
 async function train() {
@@ -27,7 +32,7 @@ async function train() {
   const weights = [2.5];
   // const bias = rand.num();
   const bias = 6;
-  const neuron = new Neuron(bias, weights);
+  const neuron = new Neuron(bias, weights, identity);
 
   const samples = [
     [0],
